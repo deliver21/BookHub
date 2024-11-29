@@ -28,6 +28,16 @@ namespace BookManager.Controllers
             var books = _bookService.GenerateBooks(settings);
             return Ok(books);
         }
+        [HttpPost("Add")]
+        public IActionResult AddBooks([FromBody] Settings? settings)
+        {
+            if (settings == null)
+            {
+                return BadRequest(new { message = "Invalid settings" });
+            }
+            var books = _bookService.AddBooks(settings);
+            return Ok(books);
+        }
 
         [HttpPost("Export")]
         public IActionResult ExportToCvs([FromBody] List<Book> books)

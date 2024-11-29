@@ -19,7 +19,7 @@ namespace BookManager.Services
 
                 int startIndex = (settings.PageNumber - 1) * 10 + 1;
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     var book = PopulateBook(i, startIndex, fakerLanguage, settings);
                     books.Add(book);
@@ -31,6 +31,35 @@ namespace BookManager.Services
             {
                 Console.WriteLine($"From Book Service : {ex.Message}");
             }            
+            return new List<Book>();
+        }
+
+        public List<Book> AddBooks(Settings settings)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(settings.LanguageRegion))
+                {
+                    settings.LanguageRegion = "en";
+                }
+                var random = new Random(settings.Seed.GetHashCode() + settings.PageNumber);
+                var fakerLanguage = new Faker(settings.LanguageRegion);
+                var books = new List<Book>();
+
+                int startIndex = (settings.PageNumber - 1) * 10 + 1;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var book = PopulateBook(i, startIndex, fakerLanguage, settings);
+                    books.Add(book);
+                }
+
+                return books;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"From Book Service : {ex.Message}");
+            }
             return new List<Book>();
         }
         private Book PopulateBook(int i ,int startIndex, Faker faker, Settings settings)

@@ -4,6 +4,8 @@ let globalBooks = [];
 
 function generateRandomSeed() {
     document.getElementById("seed").value = Math.floor(100000 + Math.random() * 900000);
+    loadBooks();
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -42,7 +44,7 @@ function loadBooks() {
     const tableBody = document.querySelector("#booksTable tbody");
     tableBody.innerHTML = "";   
 
-    axios.post('https://localhost:7147/Books/Generate', settings)
+    axios.post('/Books/Generate', settings)
         .then(response => {
             const tableBody = document.querySelector("#booksTable tbody");
             response.data.forEach((book,i) => {
@@ -94,7 +96,7 @@ function addBooks() {
     };
         const tableBody = document.querySelector("#booksTable tbody");
 
-    axios.post('https://localhost:7147/Books/Generate', settings)
+    axios.post('/Books/Add', settings)
         .then(response => {
             const tableBody = document.querySelector("#booksTable tbody");
             response.data.forEach((book, i) => {
@@ -148,7 +150,7 @@ window.addEventListener("scroll", () => {
 
 document.getElementById("exportButton").addEventListener("click", () => {
     
-    axios.post('https://localhost:7147/Books/Export', globalBooks, { responseType: 'blob' })
+    axios.post('/Books/Export', globalBooks, { responseType: 'blob' })
         .then(response => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
