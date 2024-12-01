@@ -79,7 +79,7 @@ namespace BookManager.Services
         }
         private string[] GenerateReviews(Faker f, double reviewCount)
         {
-            var reviewChecker = reviewCount <= 0.5 ? 1 : (int)reviewCount;
+            var reviewChecker = reviewCount >= 0.5 || reviewCount <= 1? 1 : (int)reviewCount;
             var reviews = new string[reviewChecker];
             for (int i = 0; i < reviews.Length; i++)
             {
